@@ -75,7 +75,7 @@ class TestSinglyLinkedList(unittest.TestCase):
         self.assertEqual(self.linkedList.head.next.data, 1)
         # Testing deletion at the head
         self.linkedList.delete_at_index(0)
-        self.assertEqual(self.linkedList.head.data, 3)
+        self.assertEqual(self.linkedList.head.data, 1)
         # Testing deletion at an index larger than the list
         with self.assertRaises(IndexError):
             self.linkedList.delete_at_index(5)
