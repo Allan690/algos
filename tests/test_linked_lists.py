@@ -1,8 +1,8 @@
 import unittest
 
-from linked_lists import LinkedList
+from singly_linked_lists import LinkedList
 
-class TestLinkedList(unittest.TestCase):
+class TestSinglyLinkedList(unittest.TestCase):
 
     def setUp(self):
         # Setup for the tests; creating a linked list with some nodes
