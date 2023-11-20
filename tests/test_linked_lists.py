@@ -58,5 +58,27 @@ class TestSinglyLinkedList(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.linkedList.search(1)
 
+    def test_insert_at_index(self):
+        # Testing insertion at a specific index
+        self.linkedList.insert_at_index(1, 4)
+        self.assertEqual(self.linkedList.head.next.data, 4)
+        # Testing insertion at the head
+        self.linkedList.insert_at_index(0, 5)  # LinkedList: 5 -> 1 -> 4 -> 2 -> 3
+        self.assertEqual(self.linkedList.head.data, 5)
+        # Testing insertion at an index larger than the list
+        with self.assertRaises(IndexError):
+            self.linkedList.insert_at_index(10, 6)
+
+    def test_delete_at_index(self):
+        # Testing deletion at a specific index
+        self.linkedList.delete_at_index(1)
+        self.assertEqual(self.linkedList.head.next.data, 1)
+        # Testing deletion at the head
+        self.linkedList.delete_at_index(0)
+        self.assertEqual(self.linkedList.head.data, 3)
+        # Testing deletion at an index larger than the list
+        with self.assertRaises(IndexError):
+            self.linkedList.delete_at_index(5)
+
 if __name__ == '__main__':
     unittest.main()

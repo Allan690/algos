@@ -153,6 +153,59 @@ class LinkedList:
         new_node = Node(data=data, next=curr.next)
         curr.next = new_node
 
+
+    def insert_at_index(self, index, data):
+        """
+        inserts a new node at a specific index of the linked list.
+        this requires, first, traversal to the specified index. If the index is larger than the list, throw index error,
+        else insert at that index
+        """
+        if self.head is None and index != 0:
+            raise ValueError('list is empty')
+        if index == 0:
+            new_node = Node(data=data, next=self.head.next)
+            self.head = new_node
+        else:
+            try:
+                curr = self.head
+                for _ in range(index - 1):
+                    curr = curr.next
+                new_node = Node(data=data, next=curr.next)
+                curr.next = new_node
+            except:
+                raise IndexError('specified index is larger than allowed')
+
+    def print_list(self):
+        """
+        prints the linked list to stdout
+        """
+        curr = self.head
+        output = ""
+        while curr:
+            output += str(curr.data) + "->"
+            curr = curr.next
+        return output
+
+    def delete_at_index(self, index):
+        """
+        deletes a new node at a specific index of the linked list.
+        this requires, first, traversal to the index before specified index. If the index is larger than the list, throw index error,
+        else delete at that index
+        """
+        if self.head is None and index != 0:
+            raise ValueError('list is empty')
+        if index == 0:
+            self.delete_at_head()
+            return
+        else:
+            try:
+                curr = self.head
+                for _ in range(index - 1):
+                    curr = curr.next
+                curr.next = curr.next.next
+            except:
+                raise IndexError('specified index is larger than allowed')
+
     def delete_at_head(self):
         """
         removes an element at the head of the linked list. This is an O(1) operation
