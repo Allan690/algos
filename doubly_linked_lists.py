@@ -82,7 +82,6 @@ class DoublyLinkedList:
             self.tail = new_node
         return self.tail
 
-
     def insert_middle(self, data):
         """
         insert at the middle of the DLL. This requires determining the length of the list, determining the mid point,
@@ -107,14 +106,13 @@ class DoublyLinkedList:
             self.tail = new_node
         return self.head
 
-
     def insert_at_index(self, index, data):
         """
         insert at specific index of the DLL. Requires traversal to that index
         """
         list_length = len(self)
-        if index >  list_length:
-            raise IndexError('index is larger than list')
+        if index > list_length:
+            raise IndexError("index is larger than list")
         else:
             if index == 0:
                 self.insert_head(data)
@@ -133,3 +131,59 @@ class DoublyLinkedList:
                 if new_node.next is None:
                     self.tail = new_node
             return self.head
+
+    def delete_at_head(self):
+        """
+        deletes the head node of the list. This is a constant time operation. The new head node becomes the node after the head
+        if the old head was the tail as well, set the tail to None
+        """
+        if self.head == self.tail:
+            self.head = self.tail = None
+            return self.head
+        next_node = self.head.next
+        self.head = next_node
+        if next_node is not None:
+            next_node.prev = None
+        return self.head
+
+    def delete_at_tail(self):
+        """
+        requires traversing to the tail node. since we maintain a tail node, this may not be necessary.
+        we just need to set the prev node to the tail node as the tail node
+        if the tail node is the head node, then the list is empty
+        """
+        if self.tail == self.head:
+            self.tail = self.head = None
+            return self.head
+        self.tail.prev.next = None
+        self.tail = self.tail.prev
+        return self.head
+
+    def delete_at_index(self, index):
+        """
+        requires determining the length of the list, and then traversing to the index before the one we want to delete
+        and then pointing the current node we are at to the next node after the one we want to delete
+        """
+        curr = self.head
+        length = len(self)
+        # edge case where list is empty
+        if self.head is None:
+            raise IndexError("list is empty")
+        # edge case where length of the list is smaller than the index passed
+        if index > length:
+            raise IndexError("index larger than list size")
+        # edge case where index points to the head
+        if index == 0:
+            next_node = self.head.next
+            self.head = next_node
+            if next_node is not None:
+                next_node.prev = None
+            return self.head
+        for _ in range(index - 1):
+            curr = curr.next
+        node_to_delete = curr.next
+        next_node = node_to_delete.next
+        curr.next = node_to_delete.next
+        if next_node is not None:
+            next_node.prev = curr
+        return self.head
