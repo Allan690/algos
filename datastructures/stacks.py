@@ -110,3 +110,87 @@ class StackArrayImpl(StackDS):
         returns the size of the stack
         """
         return len(self.stack)
+
+
+class Node:
+    def __init__(self, data, prev=None, next=None) -> None:
+        self.val = data
+        self.prev = prev
+        self.next = next
+
+
+class StackLinkedListImpl(StackDS):
+    def __init__(self) -> None:
+        """
+        we have the head and tail nodes of our linked list here initiated as sentinels
+        """
+        self.head = Node(data=-1)
+        self.tail = Node(data=-1)
+        self.head.next = self.tail
+        self.tail.prev = self.head
+
+
+    def push(self, item):
+        """
+        adds an item to the top of the stack(head of the linked list)
+        """
+        new_node = Node(item, prev=self.head, next=self.head.next)
+        node_after_head = self.head.next
+        self.head.next = new_node
+        node_after_head.prev = new_node
+
+
+    def pop(self):
+        """
+        removes the item at the top of the stack(head of the linked list)
+        """
+        if self.head.next == self.tail:
+            raise IndexError('list is empty')
+        node_to_remove = self.head.next
+        node_after_node_to_remove = node_to_remove.next
+        node_after_node_to_remove.prev = self.head
+        self.head.next = node_after_node_to_remove
+        return node_to_remove.val
+
+
+    def peek(self):
+        """
+        gives you a view of the item at the top of the stack(head node) but does not remove it
+        """
+        if self.head.next == self.tail:
+            raise IndexError('list is empty')
+        return self.head.next.val
+
+
+    def isEmpty(self):
+        """
+        checks if the stack is empty or not
+        """
+        return self.head.next == self.tail
+
+
+    def search(self, item):
+        """
+        checks if an item is in the stack - requires traversing the entire list
+        """
+        curr = self.head.next
+        count = 0
+        while curr.next != self.tail:
+            if curr.val == item:
+                return count
+            count +=1
+            curr = curr.next
+        return -1
+
+
+    def size(self):
+        """
+        returns the size of the stack
+        """
+        curr = self.head
+        count = 0
+        while curr.next != self.tail:
+            count +=1
+            curr = curr.next
+        return count
+
