@@ -10,6 +10,7 @@ the math formular is: fib(n) = fib(n-1) + fib(n-2)
 
 """
 
+
 def fibonacci_recursive(n):
     """
     returns the nth number of the fib sequence
@@ -18,5 +19,17 @@ def fibonacci_recursive(n):
         return 0
     if n == 1:
         return 1
-    return fibonacci_recursive(n-1) + fibonacci_recursive(n-2)
+    return fibonacci_recursive(n - 1) + fibonacci_recursive(n - 2)
 
+
+def fibonacci_recursive_memoized(n, memo={0: 0, 1: 1}):
+    """
+    a memoized version of the fib_recursive function above. Uses a dictionary to store intermediate values
+    """
+    if n in memo:
+        return memo[n]
+    f = fibonacci_recursive_memoized(n - 1) + fibonacci_recursive_memoized(
+        n - 2
+    )  # compute the fib number
+    memo[n] = f  # store the value in the cache
+    return f  # return the value to the caller
