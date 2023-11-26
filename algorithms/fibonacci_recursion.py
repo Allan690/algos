@@ -33,3 +33,18 @@ def fibonacci_recursive_memoized(n, memo={0: 0, 1: 1}):
     )  # compute the fib number
     memo[n] = f  # store the value in the cache
     return f  # return the value to the caller
+
+
+def fibonacci_bottom_up_dp(n):
+    """
+    an iterative version of the fibonacci function, that uses the bottom up dp type
+    O(n)
+    """
+    if n <=1:
+        return n
+    # initialize the base case
+    fib = [0, 1]
+    # Build the Fibonacci sequence iteratively up to the nth number
+    for i in range(2, n+1):
+        fib.append(fib[i - 1] + fib[i - 2])
+    return fib[n]
